@@ -72,37 +72,40 @@
 
     <!-- JavaScript -->
     <script>
-        async function consultarSAP(event) {
-            event.preventDefault(); // Evita el envío predeterminado del formulario
+    async function consultarSAP(event) {
+    event.preventDefault(); // Evita el envío predeterminado del formulario
 
-            const rut = document.getElementById('rut').value.trim();
-            const clave = document.getElementById('clave').value.trim();
-            const resultadoDiv = document.getElementById('resultado');
-            const codigoSAPSpan = document.getElementById('codigoSAP');
+    const rut = document.getElementById('rut').value.trim();
+    const clave = document.getElementById('clave').value.trim();
+    const resultadoDiv = document.getElementById('resultado');
+    const codigoSAPSpan = document.getElementById('codigoSAP');
 
-            try {
-                const response = await fetch('/consultar', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ rut, clave })
-                });
+    try {
+        const response = await fetch('/consultar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ rut, clave })
+        });
 
-                const data = await response.json();
+        const data = await response.json();
 
-                if (data.success) {
-                    resultadoDiv.style.display = "block";
-                    codigoSAPSpan.innerHTML = `Código SAP: ${data.codigo_sap}`;
-                } else {
-                    resultadoDiv.style.display = "block";
-                    codigoSAPSpan.style.color = "#ff4d4d"; /* Rojo para errores */
-                    codigoSAPSpan.innerHTML = data.error;
-                }
-            } catch (error) {
-                resultadoDiv.style.display = "block";
-                codigoSAPSpan.style.color = "#ff4d4d";
-                codigoSAPSpan.innerHTML = "Error de conexión con el servidor.";
-            }
+        // Restablecer estilos iniciales
+        codigoSAPSpan.style.color = "#00f48f"; /* Verde brillante para éxito */
+
+        if (data.success) {
+            resultadoDiv.style.display = "block";
+            codigoSAPSpan.innerHTML = `Código SAP: ${data.codigo_sap}`;
+        } else {
+            resultadoDiv.style.display = "block";
+            codigoSAPSpan.style.color = "#ff4d4d"; /* Rojo para errores */
+            codigoSAPSpan.innerHTML = data.error;
         }
+    } catch (error) {
+        resultadoDiv.style.display = "block";
+        codigoSAPSpan.style.color = "#ff4d4d";
+        codigoSAPSpan.innerHTML = "Error de conexión con el servidor.";
+    }
+}
     </script>
 </body>
 </html>
