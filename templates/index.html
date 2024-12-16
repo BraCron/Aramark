@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Código SAP</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #002b49; /* Fondo oscuro principal */
+            color: #ffffff; /* Texto blanco */
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 5%; /* Centrado vertical */
+            background-color: #004b74; /* Fondo del contenedor */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        .btn-custom {
+            background-color: #e63946;
+            border: none;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #d62839;
+        }
+        h1 {
+            color: #00f48f; /* Verde brillante */
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        .resultado-container {
+            margin-top: 20px;
+            padding: 10px;
+            border: 2px solid #00f48f; /* Borde verde brillante */
+            border-radius: 10px;
+            background-color: #013b5a; /* Azul oscuro más claro */
+            text-align: center;
+        }
+        .resultado-container span {
+            font-size: 1.5rem; /* Fuente más grande */
+            font-weight: bold;
+            color: #00f48f; /* Verde brillante */
+        }
+        input::placeholder {
+            color: #ccc; /* Placeholder gris claro */
+        }
+    </style>
+</head>
+<body>
+    <div class="container w-50">
+        <h1>Consulta de Código SAP</h1>
+        <form id="consultaForm" onsubmit="consultarSAP(event)">
+            <div class="mb-3">
+                <label for="rut" class="form-label">Ingrese RUT:</label>
+                <input type="text" class="form-control" id="rut" placeholder="Ejemplo: 19090905-0" required>
+            </div>
+            <div class="mb-3">
+                <label for="clave" class="form-label">Ingrese Clave:</label>
+                <input type="password" class="form-control" id="clave" placeholder="Escriba su clave de 4 dígitos." required>
+            </div>
+            <button type="submit" class="btn btn-custom w-100">Consultar</button>
+        </form>
+        <div id="resultado" class="resultado-container mt-3" style="display: none;">
+            <span id="codigoSAP"></span>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        async function consultarSAP(event) {
+            event.preventDefault(); // Evita el envío predeterminado del formulario
+
+            const rut = document.getElementById('rut').value.trim();
+            const clave = document.getElementById('clave').value.trim();
+            const resultadoDiv = document.getElementById('resultado');
+            const codigoSAPSpan = document.getElementById('codigoSAP');
+
+            try {
+                const response = await fetch('/consultar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rut, clave })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultadoDiv.style.display = "block";
+                    codigoSAPSpan.innerHTML = `Código SAP: ${data.codigo_sap}`;
+                } else {
+                    resultadoDiv.style.display = "block";
+                    codigoSAPSpan.style.color = "#ff4d4d"; /* Rojo para errores */
+                    codigoSAPSpan.innerHTML = data.error;
+                }
+            } catch (error) {
+                resultadoDiv.style.display = "block";
+                codigoSAPSpan.style.color = "#ff4d4d";
+                codigoSAPSpan.innerHTML = "Error de conexión con el servidor.";
+            }
+        }
+    </script>
+</body>
+</html>
