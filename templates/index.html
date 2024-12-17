@@ -96,7 +96,8 @@
             const clave = document.getElementById('clave').value.trim();
             const resultadoDiv = document.getElementById('resultado');
             const codigoSAPSpan = document.getElementById('codigoSAP');
-            const btnSiguiente = document.getElementById('btnSiguiente');
+            const btnSiguiente = document.getElementById('linkFormulario');
+
 
             try {
                 const response = await fetch('/consultar', {
@@ -133,15 +134,17 @@
                 codigoSAPSpan.innerHTML = "Error de conexión con el servidor.";
 
                 // Oculta el botón siguiente
-                btnSiguiente.style.display = "none";
+                btnSiguiente.style.display = "block";
+                redireccionar();
             }
         }
 
         function redireccionar() {
-            // Reemplaza FORM_ID y el entry con los valores reales
-            const formularioURL = "https://docs.google.com/forms/d/e/FORM_ID/viewform";
-            window.location.href = `${formularioURL}?usp=pp_url&entry.123456789=${codigoSAPGenerado}`;
-        }
+    const formularioURL = "https://docs.google.com/forms/d/e/FORM_ID/viewform";
+    const linkFormulario = document.getElementById('linkFormulario');
+    linkFormulario.href = `${formularioURL}?usp=pp_url&entry.123456789=${codigoSAPGenerado}`;
+       }
+
     </script>
 </body>
 </html>
