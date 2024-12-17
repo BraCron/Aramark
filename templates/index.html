@@ -8,51 +8,61 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #002b49; /* Fondo oscuro principal */
-            color: #ffffff; /* Texto blanco */
+            background-color: #002b49;
+            color: #ffffff;
             font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
         }
         .container {
-            margin-top: 5%; /* Centrado vertical */
-            background-color: #004b74; /* Fondo del contenedor */
+            background-color: #004b74;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            color: #00f48f;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
         .btn-custom {
             background-color: #e63946;
             border: none;
             color: white;
+            font-size: 1.2rem;
         }
         .btn-custom:hover {
             background-color: #d62839;
         }
-        h1 {
-            color: #00f48f; /* Verde brillante */
-            text-align: center;
-            margin-bottom: 30px;
-            font-weight: bold;
-        }
         .resultado-container {
             margin-top: 20px;
             padding: 10px;
-            border: 2px solid #00f48f; /* Borde verde brillante */
+            border: 2px solid #00f48f;
             border-radius: 10px;
-            background-color: #013b5a; /* Azul oscuro más claro */
+            background-color: #013b5a;
             text-align: center;
         }
         .resultado-container span {
-            font-size: 1.5rem; /* Fuente más grande */
+            font-size: 1.5rem;
             font-weight: bold;
-            color: #00f48f; /* Verde brillante */
+            color: #00f48f;
         }
-        input::placeholder {
-            color: #ccc; /* Placeholder gris claro */
+        .btn-next {
+            background-color: #00a6ff;
+            color: white;
+            margin-top: 15px;
+            font-size: 1rem;
         }
     </style>
 </head>
 <body>
-    <div class="container w-50">
+    <div class="container">
         <h1>Consulta de Código SAP</h1>
         <form id="consultaForm" onsubmit="consultarSAP(event)">
             <div class="mb-3">
@@ -67,45 +77,55 @@
         </form>
         <div id="resultado" class="resultado-container mt-3" style="display: none;">
             <span id="codigoSAP"></span>
+            <button id="siguienteBtn" class="btn btn-next w-100" style="display: none;" onclick="redirigir()">Siguiente</button>
         </div>
     </div>
 
     <!-- JavaScript -->
     <script>
-    async function consultarSAP(event) {
-    event.preventDefault(); // Evita el envío predeterminado del formulario
+        async function consultarSAP(event) {
+            event.preventDefault();
+            const rut = document.getElementById('rut').value.trim();
+            const clave = document.getElementById('clave').value.trim();
+            const resultadoDiv = document.getElementById('resultado');
+            const codigoSAPSpan = document.getElementById('codigoSAP');
+            const siguienteBtn = document.getElementById('siguienteBtn');
 
-    const rut = document.getElementById('rut').value.trim();
-    const clave = document.getElementById('clave').value.trim();
-    const resultadoDiv = document.getElementById('resultado');
-    const codigoSAPSpan = document.getElementById('codigoSAP');
+            try {
+                const response = await fetch('/consultar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rut, clave })
+                });
 
-    try {
-        const response = await fetch('/consultar', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ rut, clave })
-        });
+                const data = await response.json();
 
-        const data = await response.json();
-
-        // Restablecer estilos iniciales
-        codigoSAPSpan.style.color = "#00f48f"; /* Verde brillante para éxito */
-
-        if (data.success) {
-            resultadoDiv.style.display = "block";
-            codigoSAPSpan.innerHTML = `Código SAP: ${data.codigo_sap}`;
-        } else {
-            resultadoDiv.style.display = "block";
-            codigoSAPSpan.style.color = "#ff4d4d"; /* Rojo para errores */
-            codigoSAPSpan.innerHTML = data.error;
+                if (data.success) {
+                    resultadoDiv.style.display = "block";
+                    codigoSAPSpan.style.color = "#00f48f"; /* Verde brillante */
+                    codigoSAPSpan.innerHTML = `Código SAP: ${data.codigo_sap}`;
+                    siguienteBtn.style.display = "block"; /* Muestra el botón */
+                    siguienteBtn.dataset.codigo = data.codigo_sap; /* Guarda el código en el botón */
+                } else {
+                    resultadoDiv.style.display = "block";
+                    codigoSAPSpan.style.color = "#ff4d4d"; /* Rojo para errores */
+                    codigoSAPSpan.innerHTML = data.error;
+                    siguienteBtn.style.display = "none"; /* Oculta el botón */
+                }
+            } catch (error) {
+                resultadoDiv.style.display = "block";
+                codigoSAPSpan.style.color = "#ff4d4d";
+                codigoSAPSpan.innerHTML = "Error de conexión con el servidor.";
+                siguienteBtn.style.display = "none";
+            }
         }
-    } catch (error) {
-        resultadoDiv.style.display = "block";
-        codigoSAPSpan.style.color = "#ff4d4d";
-        codigoSAPSpan.innerHTML = "Error de conexión con el servidor.";
-    }
-}
+
+        function redirigir() {
+            const codigoSAP = document.getElementById('siguienteBtn').dataset.codigo;
+            const urlFormulario = `https://docs.google.com/forms/d/e/TU_ID_DEL_FORMULARIO/viewform?usp=pp_url&entry.123456789=${codigoSAP}`;
+            window.location.href = urlFormulario;
+        }
     </script>
 </body>
 </html>
+
