@@ -9,16 +9,6 @@
     <style>
         /* Estilo general del cuerpo */
         body {
-<<<<<<< HEAD
-            background-color: #002b49;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-=======
             background-color: #002b49; /* Fondo oscuro principal */
             color: #ffffff;
             font-family: Arial, sans-serif;
@@ -27,25 +17,10 @@
             justify-content: center; /* Centrado horizontal */
             align-items: center; /* Centrado vertical */
             margin: 0; /* Elimina margen predeterminado */
->>>>>>> 000d340a71fae24c9eab6abf61de9db5586ffe5a
         }
 
         /* Estilo del contenedor principal */
         .container {
-<<<<<<< HEAD
-            background-color: #004b74;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            max-width: 500px;
-            width: 100%;
-        }
-        h1 {
-            color: #00f48f;
-            margin-bottom: 20px;
-            font-weight: bold;
-=======
             background-color: #004b74; /* Fondo del formulario */
             padding: 30px;
             border-radius: 15px;
@@ -53,7 +28,6 @@
             text-align: center; /* Centrado del texto */
             max-width: 500px; /* Ancho máximo */
             width: 100%; /* Asegura que no desborde */
->>>>>>> 000d340a71fae24c9eab6abf61de9db5586ffe5a
         }
 
         /* Título principal */
@@ -74,11 +48,8 @@
         .btn-custom:hover {
             background-color: #d62839;
         }
-<<<<<<< HEAD
-=======
 
         /* Resultado */
->>>>>>> 000d340a71fae24c9eab6abf61de9db5586ffe5a
         .resultado-container {
             margin-top: 20px;
             padding: 10px;
@@ -91,64 +62,32 @@
         .resultado-container span {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #00f48f;
+            color: #00f48f; /* Verde brillante */
         }
-<<<<<<< HEAD
-        .btn-next {
-            background-color: #00a6ff;
-            color: white;
-            margin-top: 15px;
-            font-size: 1rem;
-=======
 
         input::placeholder {
             color: #ccc;
->>>>>>> 000d340a71fae24c9eab6abf61de9db5586ffe5a
         }
-<style>
-    body {
-        background-color: #002b49; /* Fondo oscuro principal */
-        color: #ffffff; /* Texto blanco */
-        font-family: Arial, sans-serif;
-    }
-    .container {
-        margin-top: 5%; /* Centrado vertical */
-        background-color: #004b74; /* Fondo del contenedor */
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    }
-    .btn-custom {
-        background-color: #e63946; /* Botón rojo */
-        border: none;
-        color: white;
-    }
-    .btn-custom:hover {
-        background-color: #d62839; /* Color al pasar el mouse */
-    }
-    h1 {
-        color: #00f48f; /* Verde brillante */
-        text-align: center;
-        margin-bottom: 30px;
-        font-weight: bold;
-    }
-    .resultado-container {
-        margin-top: 20px;
-        padding: 10px;
-        border: 2px solid #00f48f; /* Borde verde brillante */
-        border-radius: 10px;
-        background-color: #013b5a; /* Azul oscuro más claro */
-        text-align: center;
-    }
-    .resultado-container span {
-        font-size: 1.5rem; /* Fuente más grande */
-        font-weight: bold;
-        color: #00f48f; /* Verde brillante */
-    }
-    input::placeholder {
-        color: #ccc; /* Placeholder gris claro */
-    }
-</style>
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Consulta de Código SAP</h1>
+        <form id="consultaForm" onsubmit="consultarSAP(event)">
+            <div class="mb-3">
+                <label for="rut" class="form-label">Ingrese RUT:</label>
+                <input type="text" class="form-control" id="rut" placeholder="Ejemplo: 12345678-9" required>
+            </div>
+            <div class="mb-3">
+                <label for="clave" class="form-label">Ingrese Clave:</label>
+                <input type="password" class="form-control" id="clave" placeholder="Escriba su clave de 4 dígitos." required>
+            </div>
+            <button type="submit" class="btn btn-custom w-100">Consultar</button>
+        </form>
+        <div id="resultado" class="resultado-container mt-3" style="display: none;">
+            <span id="codigoSAP"></span>
+        </div>
+    </div>
 
     <!-- JavaScript -->
     <script>
@@ -158,10 +97,6 @@
             const clave = document.getElementById('clave').value.trim();
             const resultadoDiv = document.getElementById('resultado');
             const codigoSAPSpan = document.getElementById('codigoSAP');
-<<<<<<< HEAD
-            const siguienteBtn = document.getElementById('siguienteBtn');
-=======
->>>>>>> 000d340a71fae24c9eab6abf61de9db5586ffe5a
 
             try {
                 const response = await fetch('/consultar', {
@@ -176,38 +111,17 @@
                     resultadoDiv.style.display = "block";
                     codigoSAPSpan.style.color = "#00f48f"; /* Verde brillante */
                     codigoSAPSpan.innerHTML = `Código SAP: ${data.codigo_sap}`;
-<<<<<<< HEAD
-                    siguienteBtn.style.display = "block"; /* Muestra el botón */
-                    siguienteBtn.dataset.codigo = data.codigo_sap; /* Guarda el código en el botón */
-=======
->>>>>>> 000d340a71fae24c9eab6abf61de9db5586ffe5a
                 } else {
                     resultadoDiv.style.display = "block";
                     codigoSAPSpan.style.color = "#ff4d4d"; /* Rojo para errores */
                     codigoSAPSpan.innerHTML = data.error;
-<<<<<<< HEAD
-                    siguienteBtn.style.display = "none"; /* Oculta el botón */
-=======
->>>>>>> 000d340a71fae24c9eab6abf61de9db5586ffe5a
                 }
             } catch (error) {
                 resultadoDiv.style.display = "block";
                 codigoSAPSpan.style.color = "#ff4d4d";
                 codigoSAPSpan.innerHTML = "Error de conexión con el servidor.";
-<<<<<<< HEAD
-                siguienteBtn.style.display = "none";
             }
-        }
-
-        function redirigir() {
-            const codigoSAP = document.getElementById('siguienteBtn').dataset.codigo;
-            const urlFormulario = `https://docs.google.com/forms/d/e/TU_ID_DEL_FORMULARIO/viewform?usp=pp_url&entry.123456789=${codigoSAP}`;
-            window.location.href = urlFormulario;
-=======
-            }
->>>>>>> 000d340a71fae24c9eab6abf61de9db5586ffe5a
         }
     </script>
 </body>
 </html>
-
