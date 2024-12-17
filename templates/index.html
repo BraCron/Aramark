@@ -87,41 +87,60 @@
         </div>
     </div>
 
-    <script>
+     <script>
+        let codigoSAPGenerado = "";
+
         async function consultarSAP(event) {
             event.preventDefault();
             const rut = document.getElementById('rut').value.trim();
             const clave = document.getElementById('clave').value.trim();
             const resultadoDiv = document.getElementById('resultado');
             const codigoSAPSpan = document.getElementById('codigoSAP');
-            const linkFormulario = document.getElementById('linkFormulario');
+            const btnSiguiente = document.getElementById('btnSiguiente');
 
             try {
-                // Simula la respuesta del servidor
-                const data = { success: true, codigo_sap: "codigo_sap" };
+                const response = await fetch('/consultar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ rut, clave })
+                });
+
+                const data = await response.json();
 
                 if (data.success) {
+                    // Muestra el código SAP
                     resultadoDiv.style.display = "block";
                     codigoSAPSpan.style.color = "#00f48f";
                     codigoSAPSpan.innerHTML = `Código SAP: ${data.codigo_sap}`;
 
-                    // Configura el enlace del formulario en modo edición
-                    const entryID = "entry.176478682";
-                    const formularioURL = `https://docs.google.com/forms/d/e/1FAIpQLSf7tKV691---YrxGUFM09bybplSf8KG1r-ST_qV-ebr3QQGcA/viewform?${entryID}=${data.codigo_sap}`;
+                    // Guarda el código SAP para usarlo en la redirección
+                    codigoSAPGenerado = data.codigo_sap;
 
-                    linkFormulario.href = formularioURL; // Asigna la URL al botón
-                    linkFormulario.style.display = "inline-block";
-                    linkFormulario.textContent = "Siguiente";
+                    // Muestra el botón siguiente
+                    btnSiguiente.style.display = "block";
                 } else {
+                    // Muestra el mensaje de error
                     resultadoDiv.style.display = "block";
                     codigoSAPSpan.style.color = "#ff4d4d";
                     codigoSAPSpan.innerHTML = data.error;
+
+                    // Oculta el botón siguiente si hubo error
+                    btnSiguiente.style.display = "none";
                 }
             } catch (error) {
                 resultadoDiv.style.display = "block";
                 codigoSAPSpan.style.color = "#ff4d4d";
                 codigoSAPSpan.innerHTML = "Error de conexión con el servidor.";
+
+                // Oculta el botón siguiente
+                btnSiguiente.style.display = "none";
             }
+        }
+
+        function redireccionar() {
+            // Reemplaza FORM_ID y el entry con los valores reales
+            const formularioURL = "https://docs.google.com/forms/d/e/FORM_ID/viewform";
+            window.location.href = `${formularioURL}?usp=pp_url&entry.123456789=${codigoSAPGenerado}`;
         }
     </script>
 </body>
