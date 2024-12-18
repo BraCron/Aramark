@@ -106,67 +106,73 @@
     </div>
 
      <script>
-        let codigoSAPGenerado = "";
+    let codigoSAPGenerado = "";
 
-        async function consultarSAP(event) {
-            event.preventDefault();
-            const rut = document.getElementById('rut').value.trim();
-            const clave = document.getElementById('clave').value.trim();
-            const resultadoDiv = document.getElementById('resultado');
-            const codigoSAPSpan = document.getElementById('codigoSAP');
-            const btnSiguiente = document.getElementById('linkFormulario');
+    async function consultarSAP(event) {
+        event.preventDefault();
+        const rut = document.getElementById('rut').value.trim();
+        const clave = document.getElementById('clave').value.trim();
+        const resultadoDiv = document.getElementById('resultado');
+        const codigoSAPSpan = document.getElementById('codigoSAP');
+        const btnSiguiente = document.getElementById('linkFormulario');
 
+        try {
+            // Llamada al servidor
+            const response = await fetch('/consultar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ rut, clave })
+            });
 
-            try {
-                const response = await fetch('/consultar', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ rut, clave })
-                });
+            // Verifica si la respuesta fue exitosa
+            const data = await response.json();
 
-                const data = await response.json();
+            if (data.success) {
+                // Muestra el resultado del código SAP
+                resultadoDiv.style.display = "block";
+                codigoSAPSpan.style.color = "#00f48f";
+                codigoSAPSpan.innerHTML = `Código SAP: ${data.codigo_sap}`;
 
-                if (data.success) {
-    resultadoDiv.style.display = "block";
-    codigoSAPSpan.style.color = "#00f48f";
-    codigoSAPSpan.innerHTML = `Código SAP: ${data.codigo_sap}`;
-    
+                // Actualiza el enlace con el código SAP
+                codigoSAPGenerado = data.codigo_sap;
+                redireccionar();
 
-    codigoSAPGenerado = data.codigo_sap;
-    redireccionar();
-    
-
-    btnSiguiente.style.display = "block";
-                 }else {
-                    // Muestra el mensaje de error
-                    resultadoDiv.style.display = "block";
-                    codigoSAPSpan.style.color = "#ff4d4d";
-                    codigoSAPSpan.innerHTML = data.error;
-
-                    // Oculta el botón siguiente si hubo error
-                    btnSiguiente.style.display = "none";
-                }
-            } catch (error) {
+                // Muestra el botón verde
+                btnSiguiente.style.display = "block";
+            } else {
+                // Manejo de errores del servidor (RUT/Clave incorrectos)
                 resultadoDiv.style.display = "block";
                 codigoSAPSpan.style.color = "#ff4d4d";
-                codigoSAPSpan.innerHTML = "Error de conexión con el servidor.";
+                codigoSAPSpan.innerHTML = data.error;
 
-                // Oculta el botón siguiente
-                btnSiguiente.style.display = "block";
-                redireccionar();
+                // Oculta el botón verde
+                btnSiguiente.style.display = "none";
             }
+        } catch (error) {
+            // Manejo de errores de conexión
+            resultadoDiv.style.display = "block";
+            codigoSAPSpan.style.color = "#ff4d4d";
+            codigoSAPSpan.innerHTML = "Error de conexión con el servidor.";
+
+            // Oculta el botón verde si hay error
+            btnSiguiente.style.display = "none";
         }
+    }
 
-       function redireccionar() {
-    const formularioURL = "https://docs.google.com/forms/d/e/1FAIpQLSf7tKV691---YrxGUFM09bybplSf8KG1r-ST_qV-ebr3QQGcA/viewform";
-    const entryID = "entry.176478682"; // ID del campo de Google Forms
-    const linkFormulario = document.getElementById('linkFormulario');
-    
-    // Añadir el código SAP dinámico a la URL
-    linkFormulario.href = `${formularioURL}?usp=pp_url&${entryID}=${codigoSAPGenerado}`;
-    linkFormulario.target = "_blank";
+    function redireccionar() {
+        // URL del formulario de Google con el parámetro prellenado
+        const formularioURL = "https://docs.google.com/forms/d/e/1FAIpQLSf7tKV691---YrxGUFM09bybplSf8KG1r-ST_qV-ebr3QQGcA/viewform";
+        const entryID = "entry.176478682";
+        const linkFormulario = document.getElementById('linkFormulario');
 
+        if (codigoSAPGenerado) {
+            linkFormulario.href = `${formularioURL}?usp=pp_url&${entryID}=${codigoSAPGenerado}`;
+            linkFormulario.target = "_blank"; // Abre en una nueva pestaña
+        } else {
+            console.error("Código SAP no disponible");
+        }
+    }
+</script>
 
-    </script>
 </body>
 </html>
