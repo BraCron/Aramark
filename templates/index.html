@@ -7,8 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #002b49;
-            color: #ffffff;
+            background-color: #8B0000; /* Rojo oscuro */
+            color: #000000; /* Texto negro */
             font-family: Arial, sans-serif;
             height: 100vh;
             display: flex;
@@ -17,20 +17,22 @@
             margin: 0;
         }
 
-        .container {
-            background-color: #004b74;
+          .container {
+            background-color: #f8f9fa; /* Gris claro */
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Sombra suave */
             text-align: center;
             max-width: 500px;
             width: 100%;
+            border: 3px solid #e63946; /* Borde rojo */
         }
 
-        h1 {
-            color: #00f48f;
-            margin-bottom: 20px;
+       h1 {
+            color: #e63946; /* Rojo vibrante */
             font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 20px;
         }
 
         .btn-custom {
@@ -40,9 +42,12 @@
             font-size: 1.2rem;
         }
 
-        .btn-custom:hover {
-            background-color: #d62839;
+          .btn-custom:hover {
+            background-color: #b22222; /* Rojo más oscuro */
+            box-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
+            transform: scale(1.05);
         }
+
 
         .resultado-container {
             margin-top: 20px;
