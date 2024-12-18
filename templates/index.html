@@ -61,7 +61,7 @@
 
         .btn-siguiente {
     margin-top: 20px;
-    background-color: #00f48f; /* Color verde principal */
+    background-color: #00f48f; 
     color: white;
     font-weight: bold;
     font-size: 1.2rem;
@@ -70,12 +70,12 @@
     border: none;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    text-decoration: none; /* Elimina el subrayado */
+    text-decoration: none; 
     }
 
     .btn-siguiente:hover {
-    background-color: #00c174; /* Verde más oscuro al pasar el puntero */
-    color: white; /* Mantiene el texto blanco */
+    background-color: #00c174; 
+    color: white; 
     transform: scale(1.05);
     box-shadow: 0 0 10px rgba(0, 244, 143, 0.7);
     }
@@ -131,11 +131,11 @@
     codigoSAPSpan.style.color = "#00f48f";
     codigoSAPSpan.innerHTML = `Código SAP: ${data.codigo_sap}`;
     
-    // Guarda el código SAP y actualiza el enlace
+
     codigoSAPGenerado = data.codigo_sap;
     redireccionar();
     
-    // Muestra el botón siguiente
+
     btnSiguiente.style.display = "block";
                  }else {
                     // Muestra el mensaje de error
@@ -164,8 +164,7 @@
     
     // Añadir el código SAP dinámico a la URL
     linkFormulario.href = `${formularioURL}?usp=pp_url&${entryID}=${codigoSAPGenerado}`;
-    linkFormulario.target = "_blank"; // Abre el formulario en una nueva pestaña
-}
+    linkFormulario.target = "_blank";
 
 
     </script>
