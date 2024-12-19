@@ -121,15 +121,15 @@
     <div class="logo-container">
         <img src="https://colegios.aramark.cl/assets/img/logoaramark.png" alt="Aramark Logo">
     </div>
-    <h1>Consulta de Código SAP</h1>
+    <h1>Conteste su encuesta de compromiso 2025</h1>
     <form id="consultaForm" onsubmit="consultarSAP(event)">
         <div class="mb-3">
-            <label for="rut" class="form-label">Ingrese RUT:</label>
+            <label for="rut" class="form-label">Ingrese RUT :</label>
             <input type="text" class="form-control" id="rut" placeholder="Ejemplo: 12345678-9" required>
         </div>
         <div class="mb-3">
-            <label for="clave" class="form-label">Ingrese Clave:</label>
-            <input type="password" class="form-control" id="clave" placeholder="Escriba su clave de 4 dígitos." required>
+            <label for="clave" class="form-label">Ingrese Clave (usando los 4 últimos dísgitos de su Rut):</label>
+            <input type="password" class="form-control" id="clave" placeholder="Ejemplo: 6789" required>
         </div>
         <button type="submit" class="btn btn-custom w-100">Consultar</button>
     </form>
