@@ -7,72 +7,88 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #8B0000; /* Rojo oscuro */
-            color: #000000; /* Texto negro */
-            font-family: Arial, sans-serif;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0;
-        }
+    background-color: #d3d3d3; /* Fondo gris claro */
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
 
-          .container {
-    background-color: #e0e0e0; /* Gris más oscuro para el fondo */
+     .logo-container {
+    position: absolute;
+    top: -100px; /* Mueve el logo hacia arriba */
+    left: 50%; /* Centra horizontalmente */
+    transform: translateX(-50%);
+}
+
+    .logo-container img {
+    max-width: 250px; /* Tamaño del logo */
+    height: auto;
+}
+
+    .container {
+    background-color: #8B0000; /* Rojo oscuro */
     padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
     text-align: center;
     max-width: 500px;
     width: 100%;
-    border: 2px solid #e63946; /* Borde rojo */
-      }
-       h1 {
-            color: #e63946; /* Rojo vibrante */
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-        }
+    position: relative; /* Necesario para posicionar el logo */
+}
+
+    h1 {
+        color: #ffffff; /* Texto blanco */
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
 
     .form-label {
-        color: #000000; /* Negro */
+        color: #ffffff; /* Texto blanco */
         font-weight: bold; /* Negrita */
         font-size: 1rem; /* Tamaño opcional */
         margin-bottom: 5px; /* Espacio debajo */
     }
 
-        .btn-custom {
-            background-color: #e63946;
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-          .btn-custom:hover {
-            background-color: #b22222; /* Rojo más oscuro */
-            box-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
-            transform: scale(1.05);
-        }
-
-
-        .resultado-container {
-    margin-top: 20px;
-    padding: 15px;
-    border: 2px solid #e63946; /* Borde rojo */
-    border-radius: 10px;
-    background-color: #333333; /* Gris oscuro */
-    text-align: center;
-    color: #ffffff; /* Texto blanco */
-    font-weight: bold;
-    font-size: 1.2rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    .btn-custom {
+        background-color: #b22222; /* Rojo vibrante */
+        border: none;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: bold;
+        padding: 10px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
     }
 
-        .resultado-container span {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #00f48f;
-        }
+    .btn-custom:hover {
+    background-color: #A52A2A; /* Color ligeramente más claro para el hover */
+    color: black; /* Texto negro al pasar el mouse */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    transform: scale(1.05); /* Efecto de zoom */
+}
+
+    .resultado-container {
+        margin-top: 20px;
+        padding: 15px;
+        border: 2px solid #ffffff; /* Borde blanco */
+        border-radius: 10px;
+        background-color: #333333; /* Gris oscuro */
+        text-align: center;
+        color: #ffffff; /* Texto blanco */
+        font-weight: bold;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    }
+
+    .resultado-container span {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #00f48f;
+    }
 
         .btn-siguiente {
     margin-top: 20px;
@@ -97,7 +113,11 @@
     </style>
 </head>
 <body>
-    <div class="container">
+
+        <div class="container">
+        <div class="logo-container">
+            <img src="aramark.png" alt="Aramark Logo">
+        </div>
         <h1>Consulta de Código SAP</h1>
         <form id="consultaForm" onsubmit="consultarSAP(event)">
             <div class="mb-3">
@@ -110,15 +130,8 @@
             </div>
             <button type="submit" class="btn btn-custom w-100">Consultar</button>
         </form>
-        <div id="resultado" class="resultado-container mt-3" style="display: none;">
-            <span id="codigoSAP"></span>
-            <!-- Botón para redirigir al formulario de Google -->
-            <a id="linkFormulario" class="btn btn-siguiente w-100 fw-bold" style="display: none; font-size: 1.2rem;" target="_blank">
-              Haga click para realizar la encuesta
-           </a>
-        </div>
     </div>
-
+	
      <script>
     let codigoSAPGenerado = "";
 
