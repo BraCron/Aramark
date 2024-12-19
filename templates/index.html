@@ -117,30 +117,30 @@
 </head>
 <body>
 
-        <div class="container">
-        <div class="logo-container">
-            <img src="https://colegios.aramark.cl/assets/img/logoaramark.png" alt="Aramark Logo">
-        </div>
-        <h1>Consulta de Código SAP</h1>
-        <form id="consultaForm" onsubmit="consultarSAP(event)">
-            <div class="mb-3">
-                <label for="rut" class="form-label">Ingrese RUT:</label>
-                <input type="text" class="form-control" id="rut" placeholder="Ejemplo: 12345678-9" required>
-            </div>
-            <div class="mb-3">
-                <label for="clave" class="form-label">Ingrese Clave:</label>
-                <input type="password" class="form-control" id="clave" placeholder="Escriba su clave de 4 dígitos." required>
-            </div>
-            <button type="submit" class="btn btn-custom w-100">Consultar</button>
-        </form>
-		<div id="resultado" class="resultado-container mt-3" style="display: none;">
-            <span id="codigoSAP"></span>
-            <!-- Botón para redirigir al formulario de Google -->
-            <a id="linkFormulario" class="btn btn-siguiente w-100 fw-bold" style="display: none; font-size: 1.2rem;" target="_blank">
-              Haga click para realizar la encuesta
-           </a>
-        </div>
+      <div class="container">
+    <div class="logo-container">
+        <img src="https://colegios.aramark.cl/assets/img/logoaramark.png" alt="Aramark Logo">
     </div>
+    <h1>Consulta de Código SAP</h1>
+    <form id="consultaForm" onsubmit="consultarSAP(event)">
+        <div class="mb-3">
+            <label for="rut" class="form-label">Ingrese RUT:</label>
+            <input type="text" class="form-control" id="rut" placeholder="Ejemplo: 12345678-9" required>
+        </div>
+        <div class="mb-3">
+            <label for="clave" class="form-label">Ingrese Clave:</label>
+            <input type="password" class="form-control" id="clave" placeholder="Escriba su clave de 4 dígitos." required>
+        </div>
+        <button type="submit" class="btn btn-custom w-100">Consultar</button>
+    </form>
+    <div id="resultado" class="resultado-container mt-3" style="display: none;">
+        <span id="codigoSAP"></span>
+        <!-- Botón para redirigir al formulario de Google -->
+        <a id="linkFormulario" class="btn btn-siguiente w-100 fw-bold" style="display: none; font-size: 1.2rem;" target="_blank">
+            Haga click para realizar la encuesta
+        </a>
+    </div>
+</div>
 	
      <script>
     let codigoSAPGenerado = "";
@@ -210,6 +210,8 @@
         }
     }
 </script>
+	
+
 
 </body>
 </html>
