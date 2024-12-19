@@ -152,7 +152,7 @@
 
         try {
             // Llamada al servidor
-            const response = await fetch('/consultar', {
+            const response = await fetch('https://aramark-consulta.onrender.com/consultar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ rut, clave })
